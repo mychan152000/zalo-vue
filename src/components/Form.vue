@@ -6,8 +6,10 @@
           <h4>Chọn giọng nói</h4>
           <p class="select">
             <select class="budget" v-model="data.speaker_id">
-              <option value="1">Giọng miền bắc</option>
-              <option value="2">Giọng miền nam</option>
+              <option value="1">Giọng nữ miền nam</option>
+              <option value="2">Giọng nữ miền bắc</option>
+              <option value="3">Giọng nam miền nam</option>
+              <option value="4">Giọng nam miền bắc</option>
             </select>
           </p>
         </div>
