@@ -1,6 +1,7 @@
 <template>
-  <div id="app" style="width:800px; margin:0 auto;">
+  <div id="app" style="width:800px; margin:0 auto;" class="container-fluid">
     <form class="vue-form " @submit.prevent="postNow">
+      <img src="@/assets/logo_transparent.jpg" width="250" height="200" />
       <fieldset>
         <div>
           <h4>Chọn giọng nói</h4>
@@ -24,7 +25,6 @@
             </select>
           </p>
         </div>
-
         <div>
           <label class="label" for="textarea">Message</label>
           <textarea
@@ -36,7 +36,7 @@
             :maxlength="message.maxlength"
           ></textarea>
           <span class="counter"
-            >{{ message.text.length }} / {{ message.maxlength }}</span
+            >{{ data.input.length }} / {{ message.maxlength }}</span
           >
         </div>
         <div>
@@ -60,7 +60,8 @@ export default {
   data: function() {
     return {
       data: {
-        input: "",
+        input: `Cảo thơm lần giở trước đèn,
+  Phong tình có lục còn truyền sử xanh.`,
         speed: "",
         speaker_id: ""
       },
@@ -70,8 +71,7 @@ export default {
         text: `Cảo thơm lần giở trước đèn,
   Phong tình có lục còn truyền sử xanh.`,
         maxlength: 2000
-      },
-      submitted: false
+      }
     };
   },
   methods: {
@@ -97,7 +97,14 @@ export default {
           console.log("r: ", r.data, null, 2);
           this.info = new Audio(r.data.data.url);
           console.log(this.info);
-          this.info.play();
+          const promise = this.info.play();
+          if (promise !== undefined) {
+            promise
+              .then(() => {})
+              .catch(error => {
+                console.log("WE have an error", error);
+              });
+          }
         })
         .then(r => (this.info = qs.stringify(r.data.data.url)))
         .catch(error => {
@@ -106,9 +113,6 @@ export default {
       e.preventDefault();
     },
     // submit form handler
-    submit: function() {
-      this.submitted = true;
-    },
 
     // check or uncheck all
     checkAll: function(event) {
